@@ -62,8 +62,8 @@ W_in=rng.rand(Dr, N)*2-1
 network_name=["ER",'DCG','DAG']
 index_R=0
 Network_weight=rng.rand(Dr,Dr) 
-
-R_network_0=(Network_initial(network_name[index_R],network_size=Dr,density=density,Depth=z+1,MC_configure=MC_configure)).T
+MC_configure=None
+R_network_0=(Network_initial(network_name[index_R],network_size=Dr,density=density,Depth=0,MC_configure=MC_configure)).T
 R_network_0=np.triu(np.multiply(R_network_0,Network_weight))+np.triu(np.multiply(R_network_0,Network_weight)).T
 R_network=R_network_0/np.max(np.abs(np.linalg.eigvals(R_network_0)))
 
