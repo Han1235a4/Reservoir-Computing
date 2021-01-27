@@ -45,10 +45,10 @@ class reservoir_computing():
         W_out= np.zeros((self.Dr, self.N))
         Pre_train_output= np.zeros((L, self.N))
          
-        R_state[0,:]=np.tanh(np.dot(self.R_network, R_state[0,:])
+        R_state[0,:]=np.tanh(np.dot(self.rho*self.R_network, R_state[0,:])
                              +self.delta*np.dot(self.W_in,train_data[0,:])+self.b)
         for i in range(1,L):
-            R_state[i,:]=np.tanh(np.dot(self.R_network, R_state[i-1,:])
+            R_state[i,:]=np.tanh(np.dot(self.rho*self.R_network, R_state[i-1,:])
                          +self.delta*np.dot(self.W_in,train_data[i,:])+self.b)
         
         W_out=traing_Wout(Train_expect[self.transient:,:],R_state[self.transient:,:],index=index_method,k=0.8)
@@ -67,11 +67,11 @@ class reservoir_computing():
         outputs=np.zeros((Pre_L,self.N))
         R_state=np.zeros((Pre_L,self.Dr))
         
-        R_state[0,:]=np.tanh((np.dot(self.R_network,self.laststate)
+        R_state[0,:]=np.tanh((np.dot(self.rho*self.R_network,self.laststate)
                              +self.delta*np.dot(self.W_in,self.lastinput)+self.b))
         outputs[0,:]=np.dot(R_state[0, :],self.W_out,)
         for i in range(1,Pre_L):
-            R_state[i, :] = np.tanh(np.dot(self.R_network, R_state[i-1,:])
+            R_state[i, :] = np.tanh(np.dot(self.rho*self.R_network, R_state[i-1,:])
                              +self.delta*np.dot(self.W_in,outputs[i-1,:])+self.b)
             
             outputs[i, :] = np.dot(R_state[i, :],self.W_out)
